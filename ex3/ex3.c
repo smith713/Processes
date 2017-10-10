@@ -5,10 +5,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here
+    int ret = fork();
+    int status;
 
+    if(ret < 0) {
+      printf("Child process creation failed");
+      exit(1);
+    } else if(ret == 0) {
+      printf("hello\n");
+    } else {
+        while (waitpid (ret, &status, WNOHANG) == 0) {
+           sleep(1);
+        }
+        printf("goodbye\n");
+    }
     return 0;
 }

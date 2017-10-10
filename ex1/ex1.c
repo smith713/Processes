@@ -8,7 +8,19 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-
+    pid_t pid;
+    int x = 100;
+    pid = fork();
+    if(pid < 0) {
+      printf("Child process creation failed\n");
+    } else if(pid == 0) {
+      printf("Child process: x = %i\n",x);
+      x += 5;
+      printf("Updated child process: x = %i\n",x);
+    } else {
+      printf("Parent process: x = %i\n",x);
+      x += 10;
+      printf("Updated parent process: x = %i\n",x);
+    }
     return 0;
 }
